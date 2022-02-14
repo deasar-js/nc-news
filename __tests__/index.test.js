@@ -28,6 +28,21 @@ describe("test first GET request", () => {
   });
 });
 
+// describe("PATCH /api/article/:article_id", () => {
+//   test("should ", () => {
+//     const articleUpdate = {
+//       inc_vote: 2,
+//     };
+//     return request(app)
+//       .patch("/api/articles/3")
+//       .send(parkUpdates)
+//       .expect(200)
+//       .then(({ body }) => {
+//         expect(body.article).toEqual({
+//           ...parkUpdates,
+//   });
+// });
+
 describe("Error handling", () => {
   test("404 route not found", () => {
     return request(app)
