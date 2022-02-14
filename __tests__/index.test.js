@@ -19,9 +19,11 @@ describe("test first GET request", () => {
         console.log(topics);
         expect(topics).toBeInstanceOf(Array);
         expect(topics).toHaveLength(3);
-        expect(topics[0]).toHaveProperty("slug");
-        expect(topics[0]).toHaveProperty("description");
         expect(topics[0]).not.toHaveProperty("wth");
+        topics.forEach((topic) => {
+          expect(topic).toHaveProperty("slug");
+          expect(topic).toHaveProperty("description");
+        });
       });
   });
 });
