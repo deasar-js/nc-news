@@ -3,6 +3,7 @@ const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
 const app = require("../app");
 const data = require("../db/data/test-data");
+const { notify } = require("../app");
 
 afterAll(() => db.end());
 
@@ -18,6 +19,9 @@ describe("test first GET request", () => {
         console.log(topics);
         expect(topics).toBeInstanceOf(Array);
         expect(topics).toHaveLength(3);
+        expect(topics[0]).toHaveProperty("slug");
+        expect(topics[0]).toHaveProperty("description");
+        expect(topics[0]).not.toHaveProperty("wth");
       });
   });
 });
