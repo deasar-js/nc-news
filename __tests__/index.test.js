@@ -56,7 +56,7 @@ describe("GET /api/articles/:article_id", () => {
   // });
 });
 
-describe.only("POST /api/articles/:article_id", () => {
+describe.only("PATCH /api/articles/:article_id", () => {
   test("status 200, responds with updated article", () => {
     const articleUpdate = {
       inc_votes: 1,
