@@ -35,7 +35,6 @@ describe("GET /api/articles/:article_id", () => {
       .expect(200)
       .then(({ body }) => {
         const { article } = body;
-        console.log(article);
         expect(article).toBeInstanceOf(Object);
         expect(article).toHaveProperty("author");
         expect(article).toHaveProperty("title");
@@ -44,19 +43,39 @@ describe("GET /api/articles/:article_id", () => {
         expect(article).toHaveProperty("topic");
         expect(article).toHaveProperty("created_at");
         expect(article).toHaveProperty("votes");
+        // asserting data-types
+        expect(
+          typeof article.author &&
+            typeof article.title &&
+            typeof article.body &&
+            typeof article.topic &&
+            typeof article.created_at
+        ).toBe("string");
+        expect(typeof article.article_id && typeof article.votes).toBe(
+          "number"
+        );
       });
   });
-  // test("404 not found", () => {
-  //   return request(app)
-  //     .get("/api/articles/999")
-  //     .expect(404)
-  //     .then(({ body }) => {
-  //       expect(body.msg).toBe("Article not found");
-  //     });
-  // });
+  test("status 400 - Bad request, query string but must be number", () => {
+    return request(app)
+      .get("/api/articles/whodis")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid input");
+      });
+  });
+  test("status 404 - not found, query number but no such article exists with id", () => {
+    return request(app)
+      .get("/api/articles/999")
+      .expect(404)
+      .then((err) => {
+        console.log(err);
+        expect(err.res.statusMessage).toBe("Not Found");
+      });
+  });
 });
 
-describe.only("PATCH /api/articles/:article_id", () => {
+describe("PATCH /api/articles/:article_id", () => {
   test("status 200, responds with updated article", () => {
     const articleUpdate = {
       inc_votes: 1,
@@ -66,7 +85,6 @@ describe.only("PATCH /api/articles/:article_id", () => {
       .send(articleUpdate)
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         expect(body.article).toEqual({
           article_id: 4,
           title: "Student SUES Mitch!",
@@ -107,7 +125,6 @@ describe.only("PATCH /api/articles/:article_id", () => {
       .send(articleUpdate)
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         expect(body.article).toEqual({
           article_id: 5,
           title: "UNCOVERED: catspiracy to bring down democracy",
@@ -117,6 +134,26 @@ describe.only("PATCH /api/articles/:article_id", () => {
           created_at: "2020-08-03T13:14:00.000Z",
           votes: -100,
         });
+      });
+  });
+  test("status 400 - Bad request, query string but must be number", () => {
+    return request(app)
+      .get("/api/articles/syd")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid input");
+      });
+  });
+  test.only("status 404 -Not found, number but doesnt exist in db", () => {
+    const articleUpdate = {
+      inc_votes: -100,
+    };
+    return request(app)
+      .patch("/api/articles/10000")
+      .send(articleUpdate)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article Not Found");
       });
   });
 });

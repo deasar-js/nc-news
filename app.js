@@ -23,7 +23,7 @@ app.use(handleCustomErrors);
 app.use(handlePsqlError);
 app.use(handleServerErrors);
 
-app.use("/*", (req, res) => {
+app.use("*", (req, res) => {
   res.status(404).send({ msg: "Route not found" });
 });
 
