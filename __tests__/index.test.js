@@ -19,12 +19,29 @@ describe("GET /api/topics", () => {
         console.log(topics);
         expect(topics).toBeInstanceOf(Array);
         expect(topics).toHaveLength(3);
-        expect(topics[0]).toHaveProperty("slug");
-        expect(topics[0]).toHaveProperty("description");
         expect(topics[0]).not.toHaveProperty("wth");
+        topics.forEach((topic) => {
+          expect(topic).toHaveProperty("slug");
+          expect(topic).toHaveProperty("description");
+        });
       });
   });
 });
+
+// describe("PATCH /api/article/:article_id", () => {
+//   test("should ", () => {
+//     const articleUpdate = {
+//       inc_vote: 2,
+//     };
+//     return request(app)
+//       .patch("/api/articles/3")
+//       .send(parkUpdates)
+//       .expect(200)
+//       .then(({ body }) => {
+//         expect(body.article).toEqual({
+//           ...parkUpdates,
+//   });
+// });
 
 describe.only("GET /api/articles/:article_id", () => {
   test("retrieve article object by id and check has correct properties", () => {
