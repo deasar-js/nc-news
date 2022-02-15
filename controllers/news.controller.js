@@ -1,4 +1,8 @@
-const { selectTopics, selectArticleById } = require("../models/news.model");
+const {
+  selectTopics,
+  selectArticleById,
+  selectUsers,
+} = require("../models/news.model");
 
 exports.getTopics = (req, res) => {
   selectTopics().then((topics) => {
@@ -10,5 +14,11 @@ exports.getArticleById = (req, res) => {
   const { article_id } = req.params;
   selectArticleById(article_id).then((article) => {
     res.status(200).send({ article });
+  });
+};
+
+exports.getUsers = (req, res) => {
+  selectUsers().then((users) => {
+    res.status(200).send({ users });
   });
 };
