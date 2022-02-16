@@ -6,6 +6,12 @@ exports.selectTopics = () => {
   });
 };
 
+exports.selectArticles = () => {
+  return db.query("SELECT * FROM articles").then((result) => {
+    return result.rows;
+  });
+};
+
 exports.selectArticleById = (id) => {
   return db
     .query(
@@ -20,7 +26,6 @@ exports.selectArticleById = (id) => {
       return rows[0];
     });
 };
-
 
 exports.updateArticleById = (article_id, inc_votes) => {
   return db
@@ -38,6 +43,7 @@ exports.updateArticleById = (article_id, inc_votes) => {
         return rows[0];
       }
     });
+};
 
 exports.selectUsers = () => {
   return db.query("SELECT * FROM users;").then((result) => {

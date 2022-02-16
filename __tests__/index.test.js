@@ -28,6 +28,38 @@ describe("GET /api/topics", () => {
   });
 });
 
+describe("GET /api/articles", () => {
+  test("200 - retrieves array of objects representing articles in db and loops through checking properties", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeInstanceOf(Array);
+        expect(articles).toHaveLength(12);
+        articles.forEach((article) => {
+          expect(
+            typeof article.author &&
+              typeof article.title &&
+              typeof article.topic &&
+              typeof article.created_at
+          ).toBe("string");
+          expect(typeof article.votes && typeof article.article_id).toBe(
+            "number"
+          );
+        });
+      });
+  });
+  test("404 - route not found ", () => {
+    return request(app)
+      .get("/api/articless")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Route not found");
+      });
+  });
+});
+
 describe("GET /api/articles/:article_id", () => {
   test("retrieve article object by id and check has correct properties", () => {
     return request(app)
@@ -144,7 +176,7 @@ describe("PATCH /api/articles/:article_id", () => {
         expect(body.msg).toBe("Invalid input");
       });
   });
-  test.only("status 404 -Not found, number but doesnt exist in db", () => {
+  test("status 404 -Not found, number but doesnt exist in db", () => {
     const articleUpdate = {
       inc_votes: -100,
     };
