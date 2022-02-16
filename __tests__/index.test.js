@@ -158,6 +158,31 @@ describe("PATCH /api/articles/:article_id", () => {
   });
 });
 
+describe("GET /api/users", () => {
+  test("status 200, responds with array of objects - representing users in database", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        const { users } = body;
+        console.log(users);
+        expect(users).toHaveLength(4);
+        users.forEach((user) => {
+          expect(user).toHaveProperty("username");
+        });
+      });
+  });
+  test("status 404, route not found", () => {
+    return request(app)
+      .get("/api/userz")
+      .expect(404)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body.msg).toBe("Route not found");
+      });
+  });
+});
+
 describe("Error handling", () => {
   test("404 route not found", () => {
     return request(app)

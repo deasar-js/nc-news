@@ -2,6 +2,8 @@ const {
   selectTopics,
   selectArticleById,
   updateArticleById,
+  selectUsers,
+
 } = require("../models/news.model");
 
 exports.getTopics = async (req, res, next) => {
@@ -33,4 +35,10 @@ exports.patchArticleById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+exports.getUsers = (req, res) => {
+  selectUsers().then((users) => {
+    res.status(200).send({ users });
+  });
 };

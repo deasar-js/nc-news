@@ -3,6 +3,7 @@ const {
   getTopics,
   getArticleById,
   patchArticleById,
+  getUsers,
 } = require("./controllers/news.controller");
 const {
   handleCustomErrors,
@@ -18,6 +19,8 @@ app.get("/api/topics", getTopics);
 
 app.get("/api/articles/:article_id", getArticleById);
 app.patch("/api/articles/:article_id", patchArticleById);
+
+app.get("/api/users", getUsers);
 
 app.use(handleCustomErrors);
 app.use(handlePsqlError);
