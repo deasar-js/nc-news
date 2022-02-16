@@ -28,7 +28,36 @@ describe("GET /api/topics", () => {
   });
 });
 
-describe("GET /api/articles/:article_id", () => {
+describe("GET /api/articles", () => {
+  test("200 - retrieves array of objects representing articles in db and loops through checking properties", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeInstanceOf(Array);
+        expect(articles).toHaveLength(12);
+        articles.forEach((article) => {
+          expect(article.author).toEqual(expect.any(String));
+          expect(article.title).toEqual(expect.any(String));
+          expect(article.topic).toEqual(expect.any(String));
+          expect(article.created_at).toEqual(expect.any(String));
+          expect(article.votes).toEqual(expect.any(Number));
+          expect(article.article_id).toEqual(expect.any(Number));
+        });
+      });
+  });
+  test("404 - route not found ", () => {
+    return request(app)
+      .get("/api/articless")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Route not found");
+      });
+  });
+});
+
+describe.only("GET /api/articles/:article_id", () => {
   test("retrieve article object by id and check has correct properties", () => {
     return request(app)
       .get("/api/articles/5")
@@ -36,13 +65,13 @@ describe("GET /api/articles/:article_id", () => {
       .then(({ body }) => {
         const { article } = body;
         expect(article).toBeInstanceOf(Object);
-        expect(article).toHaveProperty("author");
-        expect(article).toHaveProperty("title");
-        expect(article).toHaveProperty("article_id");
-        expect(article).toHaveProperty("body");
-        expect(article).toHaveProperty("topic");
-        expect(article).toHaveProperty("created_at");
-        expect(article).toHaveProperty("votes");
+        expect(article.author).toEqual(expect.any(String));
+        expect(article.title).toEqual(expect.any(String));
+        expect(article.article_id).toEqual(expect.any(Number));
+        expect(article.body).toEqual(expect.any(String));
+        expect(article.topic).toEqual(expect.any(String));
+        expect(article.created_at).toEqual(expect.any(String));
+        expect(article.votes).toEqual(expect.any(Number));
         expect(article.comment_count).toEqual(expect.any(String));
       });
   });

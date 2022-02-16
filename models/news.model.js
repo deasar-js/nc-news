@@ -6,6 +6,12 @@ exports.selectTopics = () => {
   });
 };
 
+exports.selectArticles = () => {
+  return db.query("SELECT * FROM articles").then((result) => {
+    return result.rows;
+  });
+};
+
 exports.selectArticleById = (id) => {
   return db
     .query(
