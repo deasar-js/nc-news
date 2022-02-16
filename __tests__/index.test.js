@@ -38,15 +38,12 @@ describe("GET /api/articles", () => {
         expect(articles).toBeInstanceOf(Array);
         expect(articles).toHaveLength(12);
         articles.forEach((article) => {
-          expect(
-            typeof article.author &&
-              typeof article.title &&
-              typeof article.topic &&
-              typeof article.created_at
-          ).toBe("string");
-          expect(typeof article.votes && typeof article.article_id).toBe(
-            "number"
-          );
+          expect(article.author).toEqual(expect.any(String));
+          expect(article.title).toEqual(expect.any(String));
+          expect(article.topic).toEqual(expect.any(String));
+          expect(article.created_at).toEqual(expect.any(String));
+          expect(article.votes).toEqual(expect.any(Number));
+          expect(article.article_id).toEqual(expect.any(Number));
         });
       });
   });
@@ -60,7 +57,7 @@ describe("GET /api/articles", () => {
   });
 });
 
-describe("GET /api/articles/:article_id", () => {
+describe.only("GET /api/articles/:article_id", () => {
   test("retrieve article object by id and check has correct properties", () => {
     return request(app)
       .get("/api/articles/5")
@@ -68,24 +65,13 @@ describe("GET /api/articles/:article_id", () => {
       .then(({ body }) => {
         const { article } = body;
         expect(article).toBeInstanceOf(Object);
-        expect(article).toHaveProperty("author");
-        expect(article).toHaveProperty("title");
-        expect(article).toHaveProperty("article_id");
-        expect(article).toHaveProperty("body");
-        expect(article).toHaveProperty("topic");
-        expect(article).toHaveProperty("created_at");
-        expect(article).toHaveProperty("votes");
-        // asserting data-types
-        expect(
-          typeof article.author &&
-            typeof article.title &&
-            typeof article.body &&
-            typeof article.topic &&
-            typeof article.created_at
-        ).toBe("string");
-        expect(typeof article.article_id && typeof article.votes).toBe(
-          "number"
-        );
+        expect(article.author).toEqual(expect.any(String));
+        expect(article.title).toEqual(expect.any(String));
+        expect(article.article_id).toEqual(expect.any(Number));
+        expect(article.body).toEqual(expect.any(String));
+        expect(article.topic).toEqual(expect.any(String));
+        expect(article.created_at).toEqual(expect.any(String));
+        expect(article.votes).toEqual(expect.any(Number));
       });
   });
   test("status 400 - Bad request, query string but must be number", () => {
@@ -101,7 +87,6 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/999")
       .expect(404)
       .then((err) => {
-        console.log(err);
         expect(err.res.statusMessage).toBe("Not Found");
       });
   });
