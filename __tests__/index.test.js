@@ -35,7 +35,6 @@ describe("GET /api/articles/:article_id", () => {
       .expect(200)
       .then(({ body }) => {
         const { article } = body;
-        console.log(article);
         expect(article).toBeInstanceOf(Object);
         expect(article).toHaveProperty("author");
         expect(article).toHaveProperty("title");
@@ -44,19 +43,8 @@ describe("GET /api/articles/:article_id", () => {
         expect(article).toHaveProperty("topic");
         expect(article).toHaveProperty("created_at");
         expect(article).toHaveProperty("votes");
-        // asserting data-types
-        expect(
-          typeof article.author &&
-            typeof article.title &&
-            typeof article.body &&
-            typeof article.topic &&
-            typeof article.created_at &&
-            typeof article.comment_count
-        ).toBe("string");
-        expect(typeof article.article_id && typeof article.votes).toBe(
-          "number"
-        );
-      });
+        expect(article.comment_count).toEqual(expect.any(Number))
+        // asserting data-types;
   });
   test("status 400 - Bad request, query string but must be number", () => {
     return request(app)
