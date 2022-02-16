@@ -43,8 +43,8 @@ describe("GET /api/articles/:article_id", () => {
         expect(article).toHaveProperty("topic");
         expect(article).toHaveProperty("created_at");
         expect(article).toHaveProperty("votes");
-        expect(article.comment_count).toEqual(expect.any(Number))
-        // asserting data-types;
+        expect(article.comment_count).toEqual(expect.any(String));
+      });
   });
   test("status 400 - Bad request, query string but must be number", () => {
     return request(app)
