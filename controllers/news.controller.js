@@ -1,20 +1,40 @@
 const {
   selectTopics,
   selectArticleById,
+  updateArticleById,
   selectUsers,
+
 } = require("../models/news.model");
 
-exports.getTopics = (req, res) => {
-  selectTopics().then((topics) => {
+exports.getTopics = async (req, res, next) => {
+  try {
+    const topics = await selectTopics();
     res.status(200).send({ topics });
-  });
+  } catch (err) {
+    next(err);
+  }
 };
 
-exports.getArticleById = (req, res) => {
+exports.getArticleById = async (req, res, next) => {
   const { article_id } = req.params;
-  selectArticleById(article_id).then((article) => {
+
+  try {
+    const article = await selectArticleById(article_id);
     res.status(200).send({ article });
-  });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.patchArticleById = async (req, res, next) => {
+  const { article_id } = req.params;
+  const { inc_votes } = req.body;
+  try {
+    const article = await updateArticleById(article_id, inc_votes);
+    res.status(200).send({ article });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.getUsers = (req, res) => {
