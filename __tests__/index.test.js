@@ -35,6 +35,7 @@ describe("GET /api/articles/:article_id", () => {
       .expect(200)
       .then(({ body }) => {
         const { article } = body;
+        console.log(article);
         expect(article).toBeInstanceOf(Object);
         expect(article).toHaveProperty("author");
         expect(article).toHaveProperty("title");
@@ -49,7 +50,8 @@ describe("GET /api/articles/:article_id", () => {
             typeof article.title &&
             typeof article.body &&
             typeof article.topic &&
-            typeof article.created_at
+            typeof article.created_at &&
+            typeof article.comment_count
         ).toBe("string");
         expect(typeof article.article_id && typeof article.votes).toBe(
           "number"
@@ -69,7 +71,6 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/999")
       .expect(404)
       .then((err) => {
-        console.log(err);
         expect(err.res.statusMessage).toBe("Not Found");
       });
   });
@@ -144,7 +145,7 @@ describe("PATCH /api/articles/:article_id", () => {
         expect(body.msg).toBe("Invalid input");
       });
   });
-  test.only("status 404 -Not found, number but doesnt exist in db", () => {
+  test("status 404 -Not found, number but doesnt exist in db", () => {
     const articleUpdate = {
       inc_votes: -100,
     };

@@ -9,8 +9,13 @@ exports.selectTopics = () => {
 exports.selectArticleById = (id) => {
   return db
     .query(
-      `SELECT * FROM articles 
-    WHERE article_id = $1;`,
+      `SELECT articles.*, 
+      COUNT(comments.article_id) AS comment_count
+        FROM articles 
+        LEFT JOIN comments
+        ON articles.article_id = comments.article_id 
+        WHERE articles.article_id = $1
+        GROUP BY articles.article_id`,
       [id]
     )
     .then(({ rows }) => {
@@ -20,7 +25,6 @@ exports.selectArticleById = (id) => {
       return rows[0];
     });
 };
-
 
 exports.updateArticleById = (article_id, inc_votes) => {
   return db
@@ -38,6 +42,7 @@ exports.updateArticleById = (article_id, inc_votes) => {
         return rows[0];
       }
     });
+};
 
 exports.selectUsers = () => {
   return db.query("SELECT * FROM users;").then((result) => {
