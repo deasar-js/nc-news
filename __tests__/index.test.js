@@ -44,6 +44,7 @@ describe("GET /api/articles", () => {
           expect(article.created_at).toEqual(expect.any(String));
           expect(article.votes).toEqual(expect.any(Number));
           expect(article.article_id).toEqual(expect.any(Number));
+          expect(article.comment_count).toEqual(expect.any(String));
         });
       });
   });
