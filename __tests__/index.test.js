@@ -64,6 +64,7 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/5")
       .expect(200)
       .then(({ body }) => {
+        console.log(body);
         const { article } = body;
         expect(article).toBeInstanceOf(Object);
         expect(article.author).toEqual(expect.any(String));
@@ -104,6 +105,7 @@ describe("PATCH /api/articles/:article_id", () => {
       .send(articleUpdate)
       .expect(200)
       .then(({ body }) => {
+        console.log(body);
         expect(body.article).toEqual({
           article_id: 4,
           title: "Student SUES Mitch!",
@@ -184,7 +186,6 @@ describe("GET /api/users", () => {
       .expect(200)
       .then(({ body }) => {
         const { users } = body;
-        console.log(users);
         expect(users).toHaveLength(4);
         users.forEach((user) => {
           expect(user).toHaveProperty("username");
@@ -232,7 +233,6 @@ describe("POST /api/article/:article_id/comments", () => {
       .send(newComment)
       .expect(200)
       .then(({ body }) => {
-        console.log(body.comment);
         expect(body.comment).toEqual(
           expect.objectContaining({
             author: "lurker",
@@ -256,7 +256,17 @@ describe("POST /api/article/:article_id/comments", () => {
   });
 });
 
-describe("Name of the group", () => {});
+describe.only("GET /api", () => {
+  test("responds with 200 and json endpoints listing all available endpoints on api ", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body).toBeInstanceOf(Object);
+      });
+  });
+});
 
 describe("Error handling", () => {
   test("404 route not found", () => {
