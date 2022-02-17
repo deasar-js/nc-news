@@ -34,7 +34,9 @@ describe("GET /api/articles", () => {
       .get("/api/articles")
       .expect(200)
       .then(({ body }) => {
+        console.log(body);
         const { articles } = body;
+        console.log(articles);
         expect(articles).toBeInstanceOf(Array);
         expect(articles).toHaveLength(12);
         articles.forEach((article) => {
@@ -59,7 +61,7 @@ describe("GET /api/articles", () => {
         });
       });
   });
-  test.only("status 200 - returns articles sorted by created_at ordered asc ", () => {
+  test("status 200 - returns articles sorted by created_at ordered asc ", () => {
     return request(app)
       .get("/api/articles?order=asc")
       .expect(200)
@@ -92,15 +94,42 @@ describe("GET /api/articles", () => {
         });
       });
   });
-  test.only("status 200 - returns articles sorted by author: def desc ", () => {
+  test("status 200 - returns articles sorted by author: def desc ", () => {
     return request(app)
-      .get("/api/articles?sort_by=title")
+      .get("/api/articles?sort_by=author")
       .expect(200)
       .then(({ body }) => {
         const { articles } = body;
-        expect(articles).toBeSortedBy("title", {
+        expect(articles).toBeSortedBy("author", {
           descending: true,
         });
+      });
+  });
+  test("status 200 - returns articles filtered by topic cats ", () => {
+    return request(app)
+      .get("/api/articles?topic=cats")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toHaveLength(1);
+      });
+  });
+  test("status 200 - returns articles filtered by topic cats ", () => {
+    return request(app)
+      .get("/api/articles?topic=mitch")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toHaveLength(11);
+      });
+  });
+  test("status 404 - topic doesnt exist", () => {
+    return request(app)
+      .get("/api/articles?topic=nottopic")
+      .expect(404)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body.msg).toBe("Topic not found");
       });
   });
   test("404 - route not found ", () => {
