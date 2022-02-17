@@ -29,7 +29,7 @@ describe("GET /api/topics", () => {
 });
 
 describe("GET /api/articles", () => {
-  test.only("200 - retrieves array of objects representing articles in db and loops through checking properties", () => {
+  test("200 - retrieves array of objects representing articles in db and loops through checking properties", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -44,6 +44,7 @@ describe("GET /api/articles", () => {
           expect(article.created_at).toEqual(expect.any(String));
           expect(article.votes).toEqual(expect.any(Number));
           expect(article.article_id).toEqual(expect.any(Number));
+          expect(article.comment_count).toEqual(expect.any(String));
         });
       });
   });
