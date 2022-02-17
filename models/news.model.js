@@ -5,21 +5,22 @@ exports.selectTopics = () => {
     return result.rows;
   });
 };
-
-exports.selectArticles = () => {
-  return db
-    .query(
-      `SELECT articles.*, 
+////////// here
+exports.selectArticles = (sort_by = "created_at", order = "desc", topic) => {
+  let queryStr = `SELECT articles.*, 
     COUNT(comments.article_id) AS comment_count
     FROM articles
     LEFT JOIN comments
-    ON articles.article_id = comments.article_id
-    GROUP BY articles.article_id;`
-    )
-    .then((result) => {
-      console.log(result);
-      return result.rows;
-    });
+    ON articles.article_id = comments.article_id`;
+
+  queryStr += `
+    GROUP BY articles.article_id
+    ORDER BY ${sort_by} ${order};`;
+
+  return db.query(queryStr).then((result) => {
+    console.log(result);
+    return result.rows;
+  });
 };
 
 exports.selectArticleById = (id) => {
