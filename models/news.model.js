@@ -71,3 +71,21 @@ exports.selectCommentsById = (article_id) => {
       }
     });
 };
+
+exports.insertCommentById = (article_id, username, body) => {
+  return db
+    .query(
+      `INSERT INTO comments
+    (body, article_id, author)
+    VALUES
+    ($1, $2, $3)
+    RETURNING *;`,
+      [body, article_id, username]
+    )
+    .then(({ rows }) => {
+      if (rows.length === 0) {
+        return Promise.reject({ status: 404, msg: "Failed not found" });
+      }
+      return rows[0];
+    });
+};

@@ -5,6 +5,7 @@ const {
   selectUsers,
   selectArticles,
   selectCommentsById,
+  insertCommentById,
 } = require("../models/news.model");
 
 exports.getTopics = async (req, res, next) => {
@@ -61,6 +62,17 @@ exports.getCommentsById = async (req, res, next) => {
   try {
     const comments = await selectCommentsById(article_id);
     res.status(200).send({ comments });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.postCommentById = async (req, res, next) => {
+  const { article_id } = req.params;
+  const { username, body } = req.body;
+  try {
+    const comment = await insertCommentById(article_id, username, body);
+    res.status(200).send({ comment });
   } catch (err) {
     next(err);
   }
