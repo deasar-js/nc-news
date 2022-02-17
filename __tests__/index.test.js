@@ -57,7 +57,7 @@ describe("GET /api/articles", () => {
   });
 });
 
-describe.only("GET /api/articles/:article_id", () => {
+describe("GET /api/articles/:article_id", () => {
   test("retrieve article object by id and check has correct properties", () => {
     return request(app)
       .get("/api/articles/5")
@@ -201,14 +201,40 @@ describe("GET /api/users", () => {
   });
 });
 
+describe("GET /api/articles/:article_id/comments", () => {
+  test("200 - responds with array of objects representing comments from that article_id", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then(({ body }) => {
+        const { comments } = body;
+        expect(comments).toHaveLength(11);
+        comments.forEach((comment) => {
+          expect(comment.comment_id).toEqual(expect.any(Number));
+          expect(comment.votes).toEqual(expect.any(Number));
+          expect(comment.created_at).toEqual(expect.any(String));
+          expect(comment.author).toEqual(expect.any(String));
+          expect(comment.body).toEqual(expect.any(String));
+        });
+      });
+  });
+});
+
 describe("Error handling", () => {
   test("404 route not found", () => {
     return request(app)
       .get("/api/lolwhut")
       .expect(404)
       .then(({ body }) => {
-        console.log(body);
         expect(body.msg).toBe("Route not found");
+      });
+  });
+  test("404 Comments not found", () => {
+    return request(app)
+      .get("/api/articles/999/comments")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Comments not found");
       });
   });
 });
