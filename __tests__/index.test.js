@@ -221,6 +221,43 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 });
 
+describe("POST /api/article/:article_id/comments", () => {
+  test("200 - should insert comment by article_id and return posted comment", () => {
+    const newComment = {
+      username: "lurker",
+      body: "As you were x",
+    };
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send(newComment)
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body.comment);
+        expect(body.comment).toEqual(
+          expect.objectContaining({
+            author: "lurker",
+            body: "As you were x",
+          })
+        );
+      });
+  });
+  test("400 - user doesnt exist in db, failed post", () => {
+    const newComment = {
+      username: "LiamG",
+      body: "As you were x",
+    };
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("User doesn't exist");
+      });
+  });
+});
+
+describe("Name of the group", () => {});
+
 describe("Error handling", () => {
   test("404 route not found", () => {
     return request(app)
