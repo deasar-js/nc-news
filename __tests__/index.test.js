@@ -29,7 +29,7 @@ describe("GET /api/topics", () => {
 });
 
 describe("GET /api/articles", () => {
-  test("200 - retrieves array of objects representing articles in db and loops through checking properties", () => {
+  test.only("200 - retrieves array of objects representing articles in db and loops through checking properties", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -57,7 +57,7 @@ describe("GET /api/articles", () => {
   });
 });
 
-describe.only("GET /api/articles/:article_id", () => {
+describe("GET /api/articles/:article_id", () => {
   test("retrieve article object by id and check has correct properties", () => {
     return request(app)
       .get("/api/articles/5")

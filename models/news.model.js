@@ -7,9 +7,15 @@ exports.selectTopics = () => {
 };
 
 exports.selectArticles = () => {
-  return db.query("SELECT * FROM articles").then((result) => {
-    return result.rows;
-  });
+  return db
+    .query(
+      `SELECT *  
+    FROM articles;`
+    )
+    .then((result) => {
+      console.log(result);
+      return result.rows;
+    });
 };
 
 exports.selectArticleById = (id) => {
@@ -21,7 +27,7 @@ exports.selectArticleById = (id) => {
         LEFT JOIN comments
         ON articles.article_id = comments.article_id 
         WHERE articles.article_id = $1
-        GROUP BY articles.article_id`,
+        GROUP BY articles.article_id;`,
       [id]
     )
     .then(({ rows }) => {
