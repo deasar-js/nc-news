@@ -4,6 +4,7 @@ const {
   updateArticleById,
   selectUsers,
   selectArticles,
+  selectCommentsById,
 } = require("../models/news.model");
 
 exports.getTopics = async (req, res, next) => {
@@ -46,8 +47,21 @@ exports.patchArticleById = async (req, res, next) => {
   }
 };
 
-exports.getUsers = (req, res) => {
-  selectUsers().then((users) => {
+exports.getUsers = async (req, res, next) => {
+  try {
+    const users = await selectUsers();
     res.status(200).send({ users });
-  });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getCommentsById = async (req, res, next) => {
+  const { article_id } = req.params;
+  try {
+    const comments = await selectCommentsById(article_id);
+    res.status(200).send({ comments });
+  } catch (err) {
+    next(err);
+  }
 };
