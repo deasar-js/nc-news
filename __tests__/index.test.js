@@ -256,6 +256,12 @@ describe("POST /api/article/:article_id/comments", () => {
   });
 });
 
+describe.only("DELETE /api/comments/:comment_id", () => {
+  test("delete comment 1 by id and respond with 204 and no content", () => {
+    return request(app).delete("/api/comments/1").expect(204);
+  });
+});
+
 describe("Name of the group", () => {});
 
 describe("Error handling", () => {

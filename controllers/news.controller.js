@@ -6,6 +6,7 @@ const {
   selectArticles,
   selectCommentsById,
   insertCommentById,
+  deleteCommentById,
 } = require("../models/news.model");
 
 exports.getTopics = async (req, res, next) => {
@@ -74,6 +75,16 @@ exports.postCommentById = async (req, res, next) => {
   try {
     const comment = await insertCommentById(article_id, username, body);
     res.status(200).send({ comment });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.removeCommentById = async (req, res, next) => {
+  const { comment_id } = req.params;
+  try {
+    const deleteComment = await deleteCommentById(comment_id);
+    res.status(204).send();
   } catch (err) {
     next(err);
   }
