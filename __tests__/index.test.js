@@ -220,7 +220,7 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 });
 
-describe.only("POST /api/article/:article_id/comments", () => {
+describe("POST /api/article/:article_id/comments", () => {
   test("200 - should insert comment by article_id and return posted comment", () => {
     const newComment = {
       username: "lurker",
@@ -231,7 +231,13 @@ describe.only("POST /api/article/:article_id/comments", () => {
       .send(newComment)
       .expect(200)
       .then(({ body }) => {
-        expect(body.comment.body).toBe("As you were x");
+        console.log(body.comment);
+        expect(body.comment).toEqual(
+          expect.objectContaining({
+            author: "lurker",
+            body: "As you were x",
+          })
+        );
       });
   });
   test("400 - user doesnt exist in db, failed post", () => {
