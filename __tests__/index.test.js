@@ -172,6 +172,7 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/5")
       .expect(200)
       .then(({ body }) => {
+        console.log(body);
         const { article } = body;
         expect(article).toBeInstanceOf(Object);
         expect(article.author).toEqual(expect.any(String));
@@ -212,6 +213,7 @@ describe("PATCH /api/articles/:article_id", () => {
       .send(articleUpdate)
       .expect(200)
       .then(({ body }) => {
+        console.log(body);
         expect(body.article).toEqual({
           article_id: 4,
           title: "Student SUES Mitch!",
@@ -323,6 +325,52 @@ describe("GET /api/articles/:article_id/comments", () => {
           expect(comment.author).toEqual(expect.any(String));
           expect(comment.body).toEqual(expect.any(String));
         });
+      });
+  });
+});
+
+describe("POST /api/article/:article_id/comments", () => {
+  test("200 - should insert comment by article_id and return posted comment", () => {
+    const newComment = {
+      username: "lurker",
+      body: "As you were x",
+    };
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send(newComment)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comment).toEqual(
+          expect.objectContaining({
+            author: "lurker",
+            body: "As you were x",
+          })
+        );
+      });
+  });
+  test("400 - user doesnt exist in db, failed post", () => {
+    const newComment = {
+      username: "LiamG",
+      body: "As you were x",
+    };
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("User doesn't exist");
+      });
+  });
+});
+
+describe.only("GET /api", () => {
+  test("responds with 200 and json endpoints listing all available endpoints on api ", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body).toBeInstanceOf(Object);
       });
   });
 });

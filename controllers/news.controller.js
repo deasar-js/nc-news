@@ -5,7 +5,10 @@ const {
   selectUsers,
   selectArticles,
   selectCommentsById,
+  insertCommentById,
 } = require("../models/news.model");
+
+const endpoints = require("../endpoints.json");
 
 exports.getTopics = async (req, res, next) => {
   try {
@@ -65,4 +68,19 @@ exports.getCommentsById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+exports.postCommentById = async (req, res, next) => {
+  const { article_id } = req.params;
+  const { username, body } = req.body;
+  try {
+    const comment = await insertCommentById(article_id, username, body);
+    res.status(200).send({ comment });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getEndpoints = async (req, res, next) => {
+  res.status(200).send(endpoints);
 };
