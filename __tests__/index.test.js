@@ -270,8 +270,6 @@ describe("DELETE /api/comments/:comment_id", () => {
   });
 });
 
-describe("Name of the group", () => {});
-
 describe("Error handling", () => {
   test("404 route not found", () => {
     return request(app)
