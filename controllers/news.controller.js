@@ -8,6 +8,8 @@ const {
   insertCommentById,
 } = require("../models/news.model");
 
+const endpoints = require("../endpoints.json");
+
 exports.getTopics = async (req, res, next) => {
   try {
     const topics = await selectTopics();
@@ -77,4 +79,8 @@ exports.postCommentById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+exports.getEndpoints = async (req, res, next) => {
+  res.status(200).send(endpoints);
 };
