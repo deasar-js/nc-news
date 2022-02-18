@@ -373,8 +373,11 @@ describe("DELETE /api/comments/:comment_id", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("Not a valid comment id");
+      });
+  });
+});
 
-describe.("GET /api", () => {
+describe("GET /api", () => {
   test("responds with 200 and json endpoints listing all available endpoints on api ", () => {
     return request(app)
       .get("/api")

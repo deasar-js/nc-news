@@ -90,8 +90,8 @@ exports.removeCommentById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
 
 exports.getEndpoints = async (req, res, next) => {
   res.status(200).send(endpoints);
-
 };
