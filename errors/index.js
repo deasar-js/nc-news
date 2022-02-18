@@ -15,6 +15,8 @@ exports.handlePsqlError = (err, req, res, next) => {
   console.log(err.code);
   if (err.code === "22P02") {
     res.status(400).send({ msg: "Invalid input" });
+  } else if (err.code === "42601") {
+    res.status(400).send({ msg: "Not valid query" });
   } else {
     next(err);
   }

@@ -16,7 +16,6 @@ describe("GET /api/topics", () => {
       .expect(200)
       .then(({ body }) => {
         const { topics } = body;
-        console.log(topics);
         expect(topics).toBeInstanceOf(Array);
         expect(topics).toHaveLength(3);
         expect(topics[0]).not.toHaveProperty("wth");
@@ -34,9 +33,7 @@ describe("GET /api/articles", () => {
       .get("/api/articles")
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         const { articles } = body;
-        console.log(articles);
         expect(articles).toBeInstanceOf(Array);
         expect(articles).toHaveLength(12);
         articles.forEach((article) => {
@@ -72,6 +69,26 @@ describe("GET /api/articles", () => {
         });
       });
   });
+  test("status 200 - responds with sorted by title ordered asc ", () => {
+    return request(app)
+      .get("/api/articles?sort_by=title&order=asc")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("title", {
+          descending: false,
+        });
+      });
+  });
+
+  test("400 - ORDER query not valid", () => {
+    return request(app)
+      .get("/api/articles?order=NOTVALID")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not valid query");
+      });
+  });
   test("status 200 - returns articles sorted by votes: def desc", () => {
     return request(app)
       .get("/api/articles?sort_by=votes")
@@ -105,6 +122,14 @@ describe("GET /api/articles", () => {
         });
       });
   });
+  test("400 - SortBy query not valid", () => {
+    return request(app)
+      .get("/api/articles?order=NOTVALID")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not valid query");
+      });
+  });
   test("status 200 - returns articles filtered by topic cats ", () => {
     return request(app)
       .get("/api/articles?topic=cats")
@@ -128,7 +153,6 @@ describe("GET /api/articles", () => {
       .get("/api/articles?topic=nottopic")
       .expect(404)
       .then(({ body }) => {
-        console.log(body);
         expect(body.msg).toBe("Topic not found");
       });
   });
@@ -268,7 +292,6 @@ describe("GET /api/users", () => {
       .expect(200)
       .then(({ body }) => {
         const { users } = body;
-        console.log(users);
         expect(users).toHaveLength(4);
         users.forEach((user) => {
           expect(user).toHaveProperty("username");
@@ -280,7 +303,6 @@ describe("GET /api/users", () => {
       .get("/api/userz")
       .expect(404)
       .then(({ body }) => {
-        console.log(body);
         expect(body.msg).toBe("Route not found");
       });
   });
