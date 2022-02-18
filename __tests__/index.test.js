@@ -363,13 +363,23 @@ describe("POST /api/article/:article_id/comments", () => {
   });
 });
 
-describe.only("GET /api", () => {
+describe("DELETE /api/comments/:comment_id", () => {
+  test("delete comment 1 by id and respond with 204 and no content", () => {
+    return request(app).delete("/api/comments/1").expect(204);
+  });
+  test("Error handle - invalid id/not found id.", () => {
+    return request(app)
+      .delete("/api/comments/999")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not a valid comment id");
+
+describe.("GET /api", () => {
   test("responds with 200 and json endpoints listing all available endpoints on api ", () => {
     return request(app)
       .get("/api")
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         expect(body).toBeInstanceOf(Object);
       });
   });
