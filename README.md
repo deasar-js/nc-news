@@ -29,3 +29,5 @@ Create two .env files (important)
   - PGDATABASE=nc_news
 - .env.test
   - PGDATABASE=nc_news_test
+
+Anything else?
