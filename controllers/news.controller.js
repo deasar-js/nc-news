@@ -9,6 +9,8 @@ const {
   deleteCommentById,
 } = require("../models/news.model");
 
+const endpoints = require("../endpoints.json");
+
 exports.getTopics = async (req, res, next) => {
   try {
     const topics = await selectTopics();
@@ -19,9 +21,9 @@ exports.getTopics = async (req, res, next) => {
 };
 
 exports.getArticles = async (req, res, next) => {
+  const { sort_by, order, topic } = req.query;
   try {
-    const articles = await selectArticles();
-    console.log(articles);
+    const articles = await selectArticles(sort_by, order, topic);
     res.status(200).send({ articles });
   } catch (err) {
     next(err);
@@ -88,4 +90,8 @@ exports.removeCommentById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+
+exports.getEndpoints = async (req, res, next) => {
+  res.status(200).send(endpoints);
+
 };

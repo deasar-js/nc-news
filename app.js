@@ -8,6 +8,7 @@ const {
   getCommentsById,
   postCommentById,
   removeCommentById,
+  getEndpoints,
 } = require("./controllers/news.controller");
 const {
   handleCustomErrors,
@@ -18,6 +19,8 @@ const {
 const app = express();
 
 app.use(express.json());
+
+app.get("/api", getEndpoints);
 
 app.get("/api/topics", getTopics);
 
