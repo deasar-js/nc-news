@@ -30,4 +30,7 @@ Create two .env files (important)
 - .env.test
   - PGDATABASE=nc_news_test
 
-Anything else?
+Minimum Version Requirements:
+
+- Node.js: v17.3.0
+- Postgres: 14.1
