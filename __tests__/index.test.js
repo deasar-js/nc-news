@@ -16,7 +16,6 @@ describe("GET /api/topics", () => {
       .expect(200)
       .then(({ body }) => {
         const { topics } = body;
-        console.log(topics);
         expect(topics).toBeInstanceOf(Array);
         expect(topics).toHaveLength(3);
         expect(topics[0]).not.toHaveProperty("wth");
@@ -46,6 +45,115 @@ describe("GET /api/articles", () => {
           expect(article.article_id).toEqual(expect.any(Number));
           expect(article.comment_count).toEqual(expect.any(String));
         });
+      });
+  });
+  test("status 200 - returns articles sorted by default created at desc", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("created_at", {
+          descending: true,
+        });
+      });
+  });
+  test("status 200 - returns articles sorted by created_at ordered asc ", () => {
+    return request(app)
+      .get("/api/articles?order=asc")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("created_at", {
+          descending: false,
+        });
+      });
+  });
+  test("status 200 - responds with sorted by title ordered asc ", () => {
+    return request(app)
+      .get("/api/articles?sort_by=title&order=asc")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("title", {
+          descending: false,
+        });
+      });
+  });
+
+  test("400 - ORDER query not valid", () => {
+    return request(app)
+      .get("/api/articles?order=NOTVALID")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not valid query");
+      });
+  });
+  test("status 200 - returns articles sorted by votes: def desc", () => {
+    return request(app)
+      .get("/api/articles?sort_by=votes")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("votes", {
+          descending: true,
+        });
+      });
+  });
+  test("status 200 - returns articles sorted by title: def desc", () => {
+    return request(app)
+      .get("/api/articles?sort_by=title")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("title", {
+          descending: true,
+        });
+      });
+  });
+  test("status 200 - returns articles sorted by author: def desc ", () => {
+    return request(app)
+      .get("/api/articles?sort_by=author")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("author", {
+          descending: true,
+        });
+      });
+  });
+  test("400 - SortBy query not valid", () => {
+    return request(app)
+      .get("/api/articles?order=NOTVALID")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not valid query");
+      });
+  });
+  test("status 200 - returns articles filtered by topic cats ", () => {
+    return request(app)
+      .get("/api/articles?topic=cats")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toHaveLength(1);
+      });
+  });
+  test("status 200 - returns articles filtered by topic cats ", () => {
+    return request(app)
+      .get("/api/articles?topic=mitch")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toHaveLength(11);
+      });
+  });
+  test("status 404 - topic doesnt exist", () => {
+    return request(app)
+      .get("/api/articles?topic=nottopic")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Topic not found");
       });
   });
   test("404 - route not found ", () => {
@@ -197,7 +305,6 @@ describe("GET /api/users", () => {
       .get("/api/userz")
       .expect(404)
       .then(({ body }) => {
-        console.log(body);
         expect(body.msg).toBe("Route not found");
       });
   });
