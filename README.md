@@ -23,12 +23,6 @@ Instructions:
 
    - npm test
 
-Create two .env files (important)
-
-- .env.development
-  - PGDATABASE=nc_news
-- .env.test
-  - PGDATABASE=nc_news_test
 
 Minimum Version Requirements:
 
