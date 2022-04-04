@@ -80,18 +80,18 @@
     }
   },
 
-  "POST /api/article/:article_id/comments": {
+  "POST /api/articles/:article_id/comments": {
     "description": "takes a new comment and adds it to the database then serves the newly posted comment",
     "queries": [],
     "exampleRequest": {
-      "username": "lurker",
+      "username": "rogersop",
       "body": "As you were x"
     },
     "exampleResponse": {
       "comment_id": 19,
       "body": "As you were x",
       "article_id": 2,
-      "author": "lurker",
+      "author": "rogersop",
       "votes": 0,
       "created_at": "2022-02-17T20:12:37.478Z"
     }

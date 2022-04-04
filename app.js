@@ -1,16 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const {
-  getTopics,
-  getArticleById,
-  patchArticleById,
-  getUsers,
-  getArticles,
-  getCommentsById,
-  postCommentById,
-  removeCommentById,
-  getEndpoints,
-} = require("./controllers/news.controller");
+
 const {
   handleCustomErrors,
   handlePsqlError,
@@ -18,24 +8,12 @@ const {
 } = require("./errors/index");
 
 const app = express();
+const apiRouter = require("./routes/api-router.js");
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/api", getEndpoints);
-
-app.get("/api/topics", getTopics);
-
-app.get("/api/articles", getArticles);
-
-app.get("/api/articles/:article_id", getArticleById);
-app.patch("/api/articles/:article_id", patchArticleById);
-
-app.get("/api/articles/:article_id/comments", getCommentsById);
-app.post("/api/articles/:article_id/comments", postCommentById);
-app.delete("/api/comments/:comment_id", removeCommentById);
-
-app.get("/api/users", getUsers);
+app.use("/api", apiRouter);
 
 app.use(handleCustomErrors);
 app.use(handlePsqlError);
