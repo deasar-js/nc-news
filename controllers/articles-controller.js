@@ -1,24 +1,10 @@
 const {
-  selectTopics,
+  selectArticles,
   selectArticleById,
   updateArticleById,
-  selectUsers,
-  selectArticles,
   selectCommentsById,
   insertCommentById,
-  deleteCommentById,
-} = require("../models/news.model");
-
-const endpoints = require("../endpoints.json");
-
-exports.getTopics = async (req, res, next) => {
-  try {
-    const topics = await selectTopics();
-    res.status(200).send({ topics });
-  } catch (err) {
-    next(err);
-  }
-};
+} = require("../models/articles-model.js");
 
 exports.getArticles = async (req, res, next) => {
   const { sort_by, order, topic } = req.query;
@@ -52,15 +38,6 @@ exports.patchArticleById = async (req, res, next) => {
   }
 };
 
-exports.getUsers = async (req, res, next) => {
-  try {
-    const users = await selectUsers();
-    res.status(200).send({ users });
-  } catch (err) {
-    next(err);
-  }
-};
-
 exports.getCommentsById = async (req, res, next) => {
   const { article_id } = req.params;
   try {
@@ -80,18 +57,4 @@ exports.postCommentById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
-
-exports.removeCommentById = async (req, res, next) => {
-  const { comment_id } = req.params;
-  try {
-    const deleteComment = await deleteCommentById(comment_id);
-    res.status(204).send();
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.getEndpoints = async (req, res, next) => {
-  res.status(200).send(endpoints);
 };

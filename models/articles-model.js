@@ -1,10 +1,5 @@
 const db = require("../db/connection");
 
-exports.selectTopics = async () => {
-  const result = await db.query("SELECT * FROM topics;");
-  return result.rows;
-};
-
 exports.selectArticles = async (
   sort_by = "created_at",
   order = "desc",
@@ -16,7 +11,7 @@ exports.selectArticles = async (
     LEFT JOIN comments 
     ON articles.article_id = comments.article_id`;
 
-  const theTopic = [];
+  const topicArr = [];
 
   if (topic) {
     const checkTopicExists = await db.query(
@@ -26,7 +21,7 @@ exports.selectArticles = async (
     if (checkTopicExists.rows.length === 0) {
       return Promise.reject({ status: 404, msg: "Topic not found" });
     }
-    theTopic.push(topic);
+    topicArr.push(topic);
     queryStr += ` WHERE topic = $1`;
   }
 
@@ -34,8 +29,7 @@ exports.selectArticles = async (
     GROUP BY articles.article_id
     ORDER BY ${sort_by} ${order};`;
 
-  const { rows } = await db.query(queryStr, theTopic);
-  console.log(rows);
+  const { rows } = await db.query(queryStr, topicArr);
   return rows;
 };
 
@@ -72,11 +66,6 @@ exports.updateArticleById = async (article_id, inc_votes) => {
   }
 };
 
-exports.selectUsers = async () => {
-  const result = await db.query("SELECT * FROM users;");
-  return result.rows;
-};
-
 exports.selectCommentsById = async (article_id) => {
   const result = await db.query(
     `SELECT * FROM comments
@@ -105,23 +94,4 @@ exports.insertCommentById = async (article_id, username, body) => {
     return Promise.reject({ status: 404, msg: "Failed not found" });
   }
   return result.rows[0];
-};
-
-exports.deleteCommentById = async (comment_id) => {
-  const commentCheck = await db.query(
-    "SELECT * FROM comments WHERE comment_id = $1",
-    [comment_id]
-  );
-
-  if (commentCheck.rows.length === 0) {
-    return Promise.reject({
-      status: 400,
-      msg: "Not a valid comment id",
-    });
-  }
-
-  const result = await db.query(`DELETE FROM comments WHERE comment_id = $1;`, [
-    comment_id,
-  ]);
-  return result;
 };

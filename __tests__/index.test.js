@@ -172,7 +172,6 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/5")
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         const { article } = body;
         expect(article).toBeInstanceOf(Object);
         expect(article.author).toEqual(expect.any(String));
@@ -187,7 +186,7 @@ describe("GET /api/articles/:article_id", () => {
   });
   test("status 400 - Bad request, query string but must be number", () => {
     return request(app)
-      .get("/api/articles/whodis")
+      .get("/api/articles/invalid")
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("Invalid input");
@@ -213,7 +212,6 @@ describe("PATCH /api/articles/:article_id", () => {
       .send(articleUpdate)
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         expect(body.article).toEqual({
           article_id: 4,
           title: "Student SUES Mitch!",
@@ -294,7 +292,7 @@ describe("GET /api/users", () => {
       .expect(200)
       .then(({ body }) => {
         const { users } = body;
-        expect(users).toHaveLength(4);
+        expect(users).toHaveLength(3);
         users.forEach((user) => {
           expect(user).toHaveProperty("username");
         });
@@ -332,7 +330,7 @@ describe("GET /api/articles/:article_id/comments", () => {
 describe("POST /api/article/:article_id/comments", () => {
   test("200 - should insert comment by article_id and return posted comment", () => {
     const newComment = {
-      username: "lurker",
+      username: "rogersop",
       body: "As you were x",
     };
     return request(app)
@@ -342,7 +340,7 @@ describe("POST /api/article/:article_id/comments", () => {
       .then(({ body }) => {
         expect(body.comment).toEqual(
           expect.objectContaining({
-            author: "lurker",
+            author: "rogersop",
             body: "As you were x",
           })
         );
