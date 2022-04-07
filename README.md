@@ -10,16 +10,12 @@ This project is a Node.js REST API using a PostgreSQL database with GET, POST, P
 
 - I built this REST API using TDD
 - I worked with tasks on kanban board [see here](https://user-images.githubusercontent.com/86922213/162231188-aeebafb3-b147-449e-92c6-78fe340c89f5.png "kanban")
-- I used feature branches and pull requests
-  - [see here 1](https://user-images.githubusercontent.com/86922213/162231182-a4162d5b-d78a-40b2-a2c6-71ad3185338f.png "Pull requests")
-  - [see here 2](https://user-images.githubusercontent.com/86922213/162231183-913f4482-44b8-437d-9c46-2598ea40d849.png, "example pull request with comment")
+- I used feature branches and pull requests [see here](https://user-images.githubusercontent.com/86922213/162231183-913f4482-44b8-437d-9c46-2598ea40d849.png, "example pull request with comment")
 
 ## How to navigate this project
 
 - Use MVC pattern: Model handles and then sends data to controller [see here](https://user-images.githubusercontent.com/86922213/162231163-63fbbff8-6630-4a6a-a6b8-778c523d73ff.png "example model code")
-- Testing using Jest
-  - [see here 1](https://user-images.githubusercontent.com/86922213/162231172-809a5054-d423-4c4c-b11b-891b659b254b.png "test results")
-  - [see here 2](https://user-images.githubusercontent.com/86922213/162231177-ff5a7360-d239-40f3-afff-2565f0906b1e.png, "example test code")
+- Testing using Jest [see here](https://user-images.githubusercontent.com/86922213/162231172-809a5054-d423-4c4c-b11b-891b659b254b.png "test results")
 - REST API available endpoints [see here](https://user-images.githubusercontent.com/86922213/162231179-fc1a95e4-10ea-4089-b5b4-c548be5e2496.png "hosted API endpoints")
 
 ## Why I built the project this way
