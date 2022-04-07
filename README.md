@@ -22,7 +22,7 @@ This project is a Node.js REST API using a PostgreSQL database with GET, POST, P
 
 - Express JS is robust and more concise than setting up a server using http
 - Node-postgres allows simple interfacing with PostgreSQL database and works well with Express
-- Testing using Jest (unit testing), supertest(integration testing) & Husky to test on every commit
+- Testing using Jest (unit testing), supertest (integration testing) & Husky to test on every commit
 
 ## If I had more time I would change this
 
