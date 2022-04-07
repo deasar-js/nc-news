@@ -4,7 +4,7 @@
 
 ## How I worked on this project
 
-This project is a Node.js REST API using a PostgreSQL database with GET, POST, PATCH and DELETE requests using node-postgres to interact with the database. The client can create and manage new articles, users, topics and comments. It is an example of a back-end service allowing access to application data programmatically which serves the information to the front-end architecture.
+This project is a Node.js REST API with GET, POST, PATCH and DELETE requests. Using node-postgres to interact with the PostgreSQL database. The client can create and manage new articles, users, topics and comments. It is an example of a back-end service allowing access to application data programmatically which serves the information to the front-end architecture.
 
 ## My goal was to build the back-end for a news app project
 
