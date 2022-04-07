@@ -6,7 +6,7 @@
 
 This project is a Node.js REST API using a PostgreSQL database with GET, POST, PATCH and DELETE requests using node-postgres to interact with the database. The client can create and manage new articles, users, topics and comments. It is an example of a back-end service allowing access to application data programmatically which serves the information to the front-end architecture.
 
-## My goal was to build the back-end for a news app project.
+## My goal was to build the back-end for a news app project
 
 - I built this REST API using TDD
 - I worked with tasks on kanban board [see here](https://user-images.githubusercontent.com/86922213/162231188-aeebafb3-b147-449e-92c6-78fe340c89f5.png "kanban")
@@ -30,7 +30,7 @@ This project is a Node.js REST API using a PostgreSQL database with GET, POST, P
 - Integrate pagination by adding limits number of responses
 - POST new topics & DELETE articles by ID
 
-## Instructions:
+## Instructions
 
 1. Clone the repository
 2. Install dependencies with npm install (or yarn)
@@ -45,7 +45,7 @@ This project is a Node.js REST API using a PostgreSQL database with GET, POST, P
 
    - npm test
 
-## Minimum Version Requirements:
+## Minimum Version Requirements
 
 - Node.js: v17.3.0
 - Postgres: 14.1
