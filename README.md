@@ -10,7 +10,7 @@ This project is a Node.js REST API using a PostgreSQL database with GET, POST, P
 
 - I built this REST API using TDD
 - I worked with tasks on kanban board [see here](https://user-images.githubusercontent.com/86922213/162231188-aeebafb3-b147-449e-92c6-78fe340c89f5.png "kanban")
-- I used feature branches and pull requests [see here](https://user-images.githubusercontent.com/86922213/162231183-913f4482-44b8-437d-9c46-2598ea40d849.png "pull request")
+- I used feature branches and pull requests [see here](https://user-images.githubusercontent.com/86922213/162231183-913f4482-44b8-437d-9c46-2598ea40d849.png "pull request") & [see here](https://user-images.githubusercontent.com/86922213/162231182-a4162d5b-d78a-40b2-a2c6-71ad3185338f.png "Pull requests")
 
 ## How to navigate this project
 
