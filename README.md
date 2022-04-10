@@ -2,11 +2,11 @@
 
 [Check out the hosted version](https://deasar-news-app.herokuapp.com/api)
 
-## How I worked on this project
+## My goal was to build the back-end for a news app project
 
 This project is a Node.js REST API with GET, POST, PATCH and DELETE requests. Using node-postgres to interact with the PostgreSQL database. The client can create and manage new articles, users, topics and comments. It is an example of a back-end service allowing access to application data programmatically which serves the information to the front-end architecture.
 
-## My goal was to build the back-end for a news app project
+## How I worked on this project
 
 - I built this REST API using TDD
 - I worked with tasks on kanban board [see here](https://user-images.githubusercontent.com/86922213/162231188-aeebafb3-b147-449e-92c6-78fe340c89f5.png "kanban")
