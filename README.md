@@ -37,13 +37,26 @@ This project is a Node.js REST API with GET, POST, PATCH and DELETE requests. Us
 ```bash
    npm install
 ```
-3. seed local database
+3. dotenv
+ * .env.development
+```bash
+PGDATABASE=nc_news
+```
+ * .env.local
+```bash
+PGDATABASE=nc_news_test
+```
+4. seed local database
 ```bash
    npm run setup-dbs
 ```
-4. run tests with command:
+5. run tests with
 ```bash
    npm test
+```
+6. Start server with
+```bash
+npm start
 ```
 ## Minimum Version Requirements
 
