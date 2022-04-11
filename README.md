@@ -35,16 +35,16 @@ This project is a Node.js REST API with GET, POST, PATCH and DELETE requests. Us
 1. Clone the repository
 2. Install dependencies with npm install (or yarn)
 ```bash
-   - npm install
+   npm install
 ```
 3. seed local database
-
-   - npm run setup-dbs
-
+```bash
+   npm run setup-dbs
+```
 4. run tests with command:
-
-   - npm test
-
+```bash
+   npm test
+```
 ## Minimum Version Requirements
 
 - Node.js: v17.3.0
