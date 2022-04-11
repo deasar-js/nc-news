@@ -38,14 +38,14 @@ This project is a Node.js REST API with GET, POST, PATCH and DELETE requests. Us
    npm install
 ```
 3. Dotenv - create two .env files to connect to the database
-   * .env.development
-```bash
-PGDATABASE=nc_news
-```
-   * .env.local
-```bash
-PGDATABASE=nc_news_test
-```
+      * .env.development
+      ```bash
+      PGDATABASE=nc_news
+      ```
+      * .env.test
+      ```bash
+      PGDATABASE=nc_news_test
+      ```
 4. Seed local database
 ```bash
    npm run setup-dbs
