@@ -34,9 +34,9 @@ This project is a Node.js REST API with GET, POST, PATCH and DELETE requests. Us
 
 1. Clone the repository
 2. Install dependencies with npm install (or yarn)
-
+```bash
    - npm install
-
+```
 3. seed local database
 
    - npm run setup-dbs
